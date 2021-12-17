@@ -1,0 +1,67 @@
+version: "3.9"
+services:
+    wordpress-openssh-server:
+        container_name: WordPress_OpenSSH_Server
+        image: linuxserver/openssh-server
+        ports:
+            - 8222:2222/tcp
+        environment:
+            - TZ=America/Edmonton
+            - PUID=33
+            - PGID=33
+            - SUDO_ACCESS=false
+            - PASSWORD_ACCESS=true
+            - USER_NAME=admin
+            - USER_PASSWORD=lGEoXNgK5sHGh9klA3DS
+        volumes:
+            - dba0825ae52be4511ef870a2563ae25ed9688447e29f2c91fc9f3f55175ce908:/config
+            - 31a3a0b15a2b43994b03d701faf4905a878355b4f1006d476984f9740a60bf5e:/config/wordpress
+        restart: "always"
+
+    mysql-database:
+        container_name: MySQL_Database
+        image: mysql:latest
+        environment:
+            - MYSQL_DATABASE=wordpress
+            - MYSQL_USER=wordpress
+            - MYSQL_PASSWORD=bI8ZtQK7STdin7lA4NdP
+            - MYSQL_ROOT_PASSWORD=VVkxiA77enVUurXgD2Z6
+        volumes:
+            - 16493c27d9075e90dd4ec5a77a6b254bb504a7e0b272eb36182ba841ebb5517c:/var/lib/mysql
+        restart: "always"
+
+    phpmyadmin:
+        container_name: phpMyAdmin
+        image: phpmyadmin:latest
+        ports:
+            - 8080:80/tcp
+        environment:
+            - PMA_HOST=mysql-database
+            - MYSQL_ROOT_PASSWORD=VVkxiA77enVUurXgD2Z6
+        restart: "always"
+        depends_on:
+            - mysql-database
+
+    wordpress:
+        container_name: WordPress
+        image: wordpress:latest
+        ports:
+            - 8000:80/tcp
+        environment:
+            - WORDPRESS_DB_HOST=mysql-database
+            - WORDPRESS_DB_NAME=wordpress
+            - WORDPRESS_DB_USER=wordpress
+            - WORDPRESS_DB_PASSWORD=bI8ZtQK7STdin7lA4NdP
+        volumes:
+            - 31a3a0b15a2b43994b03d701faf4905a878355b4f1006d476984f9740a60bf5e:/var/www/html
+        restart: "always"
+        depends_on:
+            - mysql-database
+
+volumes:
+    dba0825ae52be4511ef870a2563ae25ed9688447e29f2c91fc9f3f55175ce908:
+        external: true
+    16493c27d9075e90dd4ec5a77a6b254bb504a7e0b272eb36182ba841ebb5517c:
+        external: true
+    31a3a0b15a2b43994b03d701faf4905a878355b4f1006d476984f9740a60bf5e:
+        external: true
