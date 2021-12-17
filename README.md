@@ -4,12 +4,12 @@ University of Calgary CPSC 471 (Fall 2021)
 
 To setup this repository to the same state used for the demo:
 1) Install Docker ( https://docs.docker.com/engine/install/#server ) and Docker Compose ( https://docs.docker.com/compose/install/ )
-2) Use the provided cpsc471.yml to setup the Stack
+2) Use the provided cpsc471.yml to setup the Stack alongside the 3 directories that are the volumes for the containers
 3) Use the following credentials to login to various aspects of the website (shown in the format of username:password):
-  - phpMyAdmin = admin:E2BQ5XMerTB2iC8gAjWD
-  - WordPress Patron view = 8643:hello123
-  - WordPress Employee view = 1:password123
-  - OpenSSH = admin:lGEoXNgK5sHGh9klA3DS
+    - phpMyAdmin = admin:E2BQ5XMerTB2iC8gAjWD
+    - WordPress Patron view = 8643:hello123
+    - WordPress Employee view = 1:password123
+    - OpenSSH = admin:lGEoXNgK5sHGh9klA3DS
 
 The following directories are used by the following programs:
 - dba0825ae52be4511ef870a2563ae25ed9688447e29f2c91fc9f3f55175ce908 = volume for the openssh server (used to allow SSH / SFTP access to the wordpress source code)
